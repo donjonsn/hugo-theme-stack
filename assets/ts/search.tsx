@@ -3,6 +3,8 @@ interface pageData {
     date: string,
     permalink: string,
     content: string,
+    tags: string[],
+    categories: string[],
     image?: string,
     preview: string,
     matchCount: number
@@ -82,11 +84,17 @@ class Search {
                 const titleMatch = regex.exec(result.title);
                 regex.lastIndex = 0;            /// Reset regex
 
+                const tagMatch = regex.exec(result.tags.toString());
+                regex.lastIndex = 0;            /// Reset regex
+
+                const categoryMatch = regex.exec(result.categories.toString());
+                regex.lastIndex = 0;            /// Reset regex
+
                 if (titleMatch) {
                     result.title = result.title.replace(regex, Search.marker);
                 }
 
-                if (titleMatch || contentMatch) {
+                if (titleMatch || contentMatch || tagMatch || categoryMatch) {
                     matched = true;
                     ++result.matchCount;
 
